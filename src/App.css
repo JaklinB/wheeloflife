@@ -1,38 +1,105 @@
-.App {
+body, html {
+  margin: 0;
+  padding: 0;
+  font-family: 'Arial', sans-serif;
+  height: 100%;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: linear-gradient(45deg, #F7E987, #5B9A8B, #445069);
+}
+
+.auth-form {
+  width: 100%;
+  max-width: 400px;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.2);
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  animation: fadeIn 1.5s;
+  display: grid;
+}
+
+.auth-form h2 {
   text-align: center;
+  margin-bottom: 25px;
+  color: #252B48;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.auth-form form {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  gap: 15px;
 }
 
-.App-link {
-  color: #61dafb;
+.auth-form input {
+  padding: 12px;
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+  background: rgba(255, 255, 255, 0.1);
+  color: #252B48;
+  margin: 10px;
 }
 
-@keyframes App-logo-spin {
+.auth-form button {
+  padding: 12px;
+  background-color: #5B9A8B;
+  color: #F7E987;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin: 10px;
+}
+
+.auth-form button:hover {
+  background-color: #445069;
+}
+
+.auth-form p {
+  text-align: center;
+  margin-top: 20px;
+  color: #252B48;
+  font-size: 14px; 
+}
+
+.auth-form a {
+  color: #F7E987;
+  text-decoration: none;
+  margin-left: 5px; 
+}
+
+.auth-form a:hover {
+  text-decoration: underline;
+}
+
+
+@keyframes fadeIn {
   from {
-    transform: rotate(0deg);
+      opacity: 0;
   }
   to {
-    transform: rotate(360deg);
+      opacity: 1;
+  }
+}
+
+@media (max-width: 600px) {
+  .auth-form {
+      max-width: 90%;
+      padding: 20px;
+  }
+
+  .auth-form h2 {
+      font-size: 1.5rem;
+  }
+
+  .auth-form input, .auth-form button {
+      padding: 10px;
   }
 }
