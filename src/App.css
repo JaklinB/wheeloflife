@@ -79,6 +79,36 @@ body, html {
   text-decoration: underline;
 }
 
+.custom-alert {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 10px;
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+}
+
+.custom-alert p {
+  color: #252B48;
+  margin-bottom: 10px;
+}
+
+.custom-alert button {
+  padding: 10px 15px;
+  background-color: #5B9A8B;
+  color: #F7E987;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.custom-alert button:hover {
+  background-color: #445069;
+}
+
 
 @keyframes fadeIn {
   from {
