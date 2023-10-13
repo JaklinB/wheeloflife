@@ -13,73 +13,23 @@
 .wheel {
   width: 50vmin;
   height: 50vmin;
-  position: relative;
-  border-radius: 50%;
-  overflow: hidden;
-}
-
-.wheel-segment-wrapper {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  transform-origin: center;
-  cursor: pointer;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 .wheel-segment {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  background-color: rgba(255, 255, 255, 0.5);
-  clip-path: polygon(50% 50%, 100% 50%, 100% 0, 70% 0);
+  fill-opacity: 0.5;
 }
+
+.career { fill: #FF9AA2; }
+.health { fill: #FFB7B2; }
+.personalGrowth { fill: #FFDAC1; }
+.relationships { fill: #E2F0CB; }
+.appearance { fill: #B5EAD7; }
+.hobbies { fill: #C7CEEA; }
 
 .segment-text {
-  position: absolute;
-  margin: 0;
-  font-size: 2vmin;
-  color: black;
-  text-align: center;
-  text-transform: capitalize;
-  white-space: nowrap;
-  transform-origin: 50% 50%;
-}
-
-.career {
-  transform: rotate(0deg);
-  background: #FF9AA2;
-}
-
-.health {
-  transform: rotate(60deg);
-  background: #FFB7B2;
-}
-
-.personalGrowth {
-  transform: rotate(120deg);
-  background: #FFDAC1;
-}
-
-.relationships {
-  transform: rotate(180deg);
-  background: #E2F0CB;
-}
-
-.appearance {
-  transform: rotate(240deg);
-  background: #B5EAD7;
-}
-
-.hobbies {
-  transform: rotate(300deg);
-  background: #C7CEEA;
+  font-size: 1.5vmin;
+  text-anchor: middle;
+  dominant-baseline: middle;
 }
 
 .segment-detail {

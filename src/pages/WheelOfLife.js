@@ -22,61 +22,31 @@ function WheelOfLife() {
     hobbies: "",
   });
 
-  const handleSegmentClick = (segment) => {
-    setSelectedSegment(segment);
-  };
-
-  const saveDataToFirebase = async () => {
-    const userCollection = collection(db, "users");
-    const q = query(userCollection, where("segment", "==", selectedSegment));
-    const querySnapshot = await getDocs(q);
-    if (querySnapshot.empty) {
-      await addDoc(userCollection, {
-        segment: selectedSegment,
-        rating: ratings[selectedSegment],
-        feedback: feedback[selectedSegment],
-      });
-    }
-  };
-
-  useEffect(() => {
-    const loadDataFromFirebase = async () => {
-      const userCollection = collection(db, "users");
-      const querySnapshot = await getDocs(userCollection);
-      querySnapshot.forEach((doc) => {
-        const segmentData = doc.data();
-        setRatings((prev) => ({
-          ...prev,
-          [segmentData.segment]: segmentData.rating,
-        }));
-        setFeedback((prev) => ({
-          ...prev,
-          [segmentData.segment]: segmentData.feedback,
-        }));
-      });
-    };
-    loadDataFromFirebase();
-  }, []);
+  const segments = Object.keys(ratings);
 
   return (
     <div className="container">
       <button className="logout-button">Logout</button>
-      <div className="wheel">
-        {Object.keys(ratings).map((segment) => (
-          <div
+      <svg className="wheel" viewBox="0 0 200 200">
+        {segments.map((segment, index) => (
+          <path
             key={segment}
-            className={`wheel-segment-wrapper ${
-              selectedSegment === segment ? "selected" : ""
-            }`}
-            onClick={() => handleSegmentClick(segment)}
-          >
-            <div className={`wheel-segment ${segment}`}></div>
-            <h4 className="segment-text" style={{
-                left: `""" + str(coordinates[segment][0]) + """vmin`, 
-                top: `""" + str(coordinates[segment][1]) + """vmin`}}>{segment}</h4>
-          </div>
+            className={`wheel-segment ${segment} ${selectedSegment === segment ? "selected" : ""}`}
+            d={`M100,100 L${100 + 100 * Math.cos(index * Math.PI / 3)},${100 + 100 * Math.sin(index * Math.PI / 3)} A100,100 0 0,1 ${100 + 100 * Math.cos((index + 1) * Math.PI / 3)},${100 + 100 * Math.sin((index + 1) * Math.PI / 3)} Z`}
+            onClick={() => setSelectedSegment(segment)}
+          />
         ))}
-      </div>
+        {segments.map((segment, index) => (
+          <text
+            key={segment}
+            className="segment-text"
+            x={100 + 65 * Math.cos((index + 0.5) * Math.PI / 3)}
+            y={100 + 65 * Math.sin((index + 0.5) * Math.PI / 3)}
+          >
+            {segment}
+          </text>
+        ))}
+      </svg>
       {selectedSegment && (
         <div className="segment-detail">
           <h3>{selectedSegment}</h3>
@@ -85,27 +55,29 @@ function WheelOfLife() {
             <input
               type="number"
               value={ratings[selectedSegment]}
-              onChange={(e) =>
-                setRatings((prev) => ({
-                  ...prev,
-                  [selectedSegment]: e.target.value,
-                }))
-              }
+              onChange={(e) => setRatings({...ratings, [selectedSegment]: e.target.value})}
             />
           </label>
           <label>
             How to improve:
             <textarea
               value={feedback[selectedSegment]}
-              onChange={(e) =>
-                setFeedback((prev) => ({
-                  ...prev,
-                  [selectedSegment]: e.target.value,
-                }))
-              }
+              onChange={(e) => setFeedback({...feedback, [selectedSegment]: e.target.value})}
             />
           </label>
-          <button onClick={saveDataToFirebase}>Save</button>
+          <button onClick={() => {
+              const userCollection = collection(db, "users");
+              const q = query(userCollection, where("segment", "==", selectedSegment));
+              getDocs(q).then(querySnapshot => {
+                if (querySnapshot.empty) {
+                  addDoc(userCollection, {
+                    segment: selectedSegment,
+                    rating: ratings[selectedSegment],
+                    feedback: feedback[selectedSegment],
+                  });
+                }
+              });
+          }}>Save</button>
         </div>
       )}
     </div>
