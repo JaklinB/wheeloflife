@@ -1,9 +1,91 @@
 .container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-  }
-  
-  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+.logout-button {
+  margin-bottom: 20px;
+}
+
+.wheel {
+  width: 50vmin;
+  height: 50vmin;
+  position: relative;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.wheel-segment-wrapper {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  transform-origin: center;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.wheel-segment {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background-color: rgba(255, 255, 255, 0.5);
+  clip-path: polygon(50% 50%, 100% 50%, 100% 0, 70% 0);
+}
+
+.segment-text {
+  position: absolute;
+  margin: 0;
+  font-size: 2vmin;
+  color: black;
+  text-align: center;
+  text-transform: capitalize;
+  white-space: nowrap;
+  transform-origin: 50% 50%;
+}
+
+.career {
+  transform: rotate(0deg);
+  background: #FF9AA2;
+}
+
+.health {
+  transform: rotate(60deg);
+  background: #FFB7B2;
+}
+
+.personalGrowth {
+  transform: rotate(120deg);
+  background: #FFDAC1;
+}
+
+.relationships {
+  transform: rotate(180deg);
+  background: #E2F0CB;
+}
+
+.appearance {
+  transform: rotate(240deg);
+  background: #B5EAD7;
+}
+
+.hobbies {
+  transform: rotate(300deg);
+  background: #C7CEEA;
+}
+
+.segment-detail {
+  margin-top: 20px;
+  background-color: white;
+  padding: 20px;
+  border: 1px solid #ccc;
+  width: 80vmin;
+}
