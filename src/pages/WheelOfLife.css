@@ -18,9 +18,9 @@
 
 .wheel-segment {
   fill-opacity: 0.7;
-  transition: fill-opacity 0.3s ease;
   stroke-width: 0.5;
   stroke: #FFF;
+  transition: fill-opacity 0.3s ease;
 }
 
 .wheel-segment.selected {
@@ -40,7 +40,6 @@
   dominant-baseline: middle;
   font-weight: bold;
   fill: #333;
-  stroke: none;
 }
 
 .segment-detail {
@@ -49,4 +48,25 @@
   padding: 20px;
   border: 1px solid #ccc;
   width: 80vmin;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+}
+
+.segment-detail input[type="range"] {
+  width: 100%;
+}
+
+.segment-detail span {
+  font-weight: bold;
+  margin-left: 10px;
+}
+
+.segment-detail button {
+  margin-top: 10px;
+  background-color: #4CAF50;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  cursor: pointer;
 }

@@ -66,13 +66,13 @@ body, html {
   text-align: center;
   margin-top: 20px;
   color: #252B48;
-  font-size: 14px; 
+  font-size: 14px;
 }
 
 .auth-form a {
   color: #F7E987;
   text-decoration: none;
-  margin-left: 5px; 
+  margin-left: 5px;
 }
 
 .auth-form a:hover {
@@ -109,27 +109,85 @@ body, html {
   background-color: #445069;
 }
 
+.nav-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #333;
+  padding: 10px 20px;
+  box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.2);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
 
-@keyframes fadeIn {
-  from {
-      opacity: 0;
-  }
-  to {
-      opacity: 1;
+nav a {
+  color: #fff;
+  text-decoration: none;
+  margin: 0 20px;
+  padding: 5px 15px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+nav a:hover {
+  background-color: #555;
+}
+
+.burger-menu {
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+}
+
+.burger-bar {
+  background-color: #fff;
+  height: 3px;
+  width: 25px;
+  margin: 3px;
+}
+
+.responsive-menu {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 200px;
+  height: 100%;
+  background-color: #333;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  transform: translateX(100%);
+  transition: transform 0.3s ease;
+  z-index: 2000;
+}
+
+.responsive-menu a {
+  color: #fff;
+  text-decoration: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.responsive-menu a:hover {
+  background-color: #555;
+}
+
+.responsive-menu.active {
+  transform: translateX(0);
+}
+
+@media (max-width: 768px) {
+  nav {
+    display: none;
   }
 }
 
-@media (max-width: 600px) {
-  .auth-form {
-      max-width: 90%;
-      padding: 20px;
-  }
-
-  .auth-form h2 {
-      font-size: 1.5rem;
-  }
-
-  .auth-form input, .auth-form button {
-      padding: 10px;
+@media (min-width: 769px) {
+  .burger-menu,
+  .responsive-menu {
+    display: none;
   }
 }
