@@ -88,43 +88,52 @@ function ImprovementsPage() {
   };
 
   return (
-    <div className="improvements-container">
-      <h2>Your Improvements</h2>
-      {Object.keys(improvements).map((segment) => (
-        <div key={segment}>
-          <h3>{segment}</h3>
-          <div className="progress-bar">
-            <div
-              className="progress"
-              style={{ width: `${ratings[segment]}%` }}
-            ></div>
+    <div className="improvements-page-background">
+      <div className="improvements-container">
+        <h2>Goals</h2>
+        {Object.keys(improvements).map((segment) => (
+          <div key={segment}>
+            <h3>{segment}</h3>
+            <div className="progress-bar">
+              <div
+                className="progress"
+                style={{ width: `${ratings[segment]}%` }}
+              ></div>
+            </div>
+            <div className="input-container">
+              <input
+                value={newImprovements[segment]}
+                onChange={(e) =>
+                  setNewImprovements({
+                    ...newImprovements,
+                    [segment]: e.target.value,
+                  })
+                }
+                placeholder={`Add new improvement for ${segment}...`}
+              />
+              <button
+                className="add-button"
+                onClick={() => handleAddImprovement(segment)}
+              >
+                +
+              </button>
+            </div>
+            <ul>
+              {improvements[segment].map((improvement, index) => (
+                <li key={index}>
+                  {improvement}
+                  <button
+                    className="delete-button"
+                    onClick={() => handleDeleteImprovement(segment, index)}
+                  >
+                    x
+                  </button>
+                </li>
+              ))}
+            </ul>
           </div>
-          <div className="input-container">
-            <input
-              value={newImprovements[segment]}
-              onChange={(e) =>
-                setNewImprovements({
-                  ...newImprovements,
-                  [segment]: e.target.value,
-                })
-              }
-              placeholder={`Add new improvement for ${segment}...`}
-            />
-            <button onClick={() => handleAddImprovement(segment)}>+</button>
-          </div>
-          <ul>
-            {improvements[segment].map((improvement, index) => (
-              <li key={index}>
-                <input type="checkbox" />
-                {improvement}
-                <button onClick={() => handleDeleteImprovement(segment, index)}>
-                  X
-                </button>
-              </li>
-            ))}
-          </ul>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   );
 }

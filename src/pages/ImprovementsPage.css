@@ -1,11 +1,48 @@
+.improvements-page-background {
+    background: linear-gradient(45deg, #F7E987, #5B9A8B, #445069);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
 .improvements-container {
-    max-width: 900px;
-    margin: 50px auto;
+    width: 100%;
+    max-width: 1200px;
     padding: 50px;
-    background-color: #f4f4f4;
+    background: rgba(254, 255, 255, 0.2);
     border-radius: 15px;
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
 }
+
+.progress-bar {
+    height: 20px;
+    background-color: #e0e0e0;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.progress {
+    height: 100%;
+    background-color: #5B9A8B;
+    border-radius: 10px;
+}
+
+input {
+    background-color: rgba(254, 255, 255, 0.2);
+    color: #445069;
+    width: 100%;
+    border: 1px solid #445069;
+    font-size: 16px;
+    display: flex;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 15px;
+    border-radius: 8px;
+    margin-right: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
 
 h2 {
     text-align: center;
@@ -25,51 +62,36 @@ h3 {
 .input-container {
     display: flex;
     justify-content: space-between;
-    margin-top: 20px;
-    margin-bottom: 30px;
-    background-color: #fff;
-    padding: 10px;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-input[type="text"] {
-    flex: 1;
-    padding: 10px 15px;
-    border: 1px solid #e0e0e0;
-    border-radius: 5px;
-    font-size: 16px;
-    outline: none;
-}
-
-button {
-    padding: 10px 20px;
-    background-color: #007bff;
+.delete-button {
+    padding: 8px 15px 11px 15px;
+    background-color: #D70040;
     color: #fff;
     border: none;
-    border-radius: 5px;
+    border-radius: 15%;
     cursor: pointer;
     font-size: 16px;
     transition: background-color 0.3s, transform 0.3s;
-    outline: none;
 }
 
-button:hover {
-    background-color: #0056b3;
-    transform: scale(1.05);
+.delete-button:hover {
+    background-color: #880808;
 }
 
-.progress-bar {
-    height: 20px;
-    background-color: #e0e0e0;
-    border-radius: 10px;
-    margin-bottom: 20px;
+.add-button {
+    padding: 8px 15px 11px 15px;
+    background-color: #F7E987;
+    color: #445069;
+    border: none;
+    border-radius: 15%;
+    cursor: pointer;
+    font-size: 25px;
+    transition: background-color 0.3s, transform 0.3s;
 }
 
-.progress {
-    height: 100%;
-    background-color: #007bff;
-    border-radius: 10px;
+.add-button:hover {
+    background-color: #F1D515;
 }
 
 ul {
@@ -82,8 +104,8 @@ li {
     justify-content: space-between;
     align-items: center;
     padding: 15px 25px;
-    background-color: #fff;
-    border: 1px solid #e0e0e0;
+    background-color: rgba(254, 255, 255, 0.3);
+    border: 1px solid rgba(254, 255, 255, 0.3);
     border-radius: 8px;
     margin-bottom: 20px;
     transition: background-color 0.3s, transform 0.3s;
@@ -91,8 +113,7 @@ li {
 }
 
 li:hover {
-    background-color: #f9f9f9;
-    transform: scale(1.02);
+    background-color: rgba(254, 255, 255, 0.44);
 }
 
 @media screen and (max-width: 768px) {
