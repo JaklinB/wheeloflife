@@ -13,10 +13,18 @@
 .wheel {
   width: 50vmin;
   height: 50vmin;
+  position: relative;
 }
 
 .wheel-segment {
-  fill-opacity: 0.5;
+  fill-opacity: 0.7;
+  transition: fill-opacity 0.3s ease;
+  stroke-width: 0.5;
+  stroke: #FFF;
+}
+
+.wheel-segment.selected {
+  fill-opacity: 0.9;
 }
 
 .career { fill: #FF9AA2; }
@@ -27,9 +35,12 @@
 .hobbies { fill: #C7CEEA; }
 
 .segment-text {
-  font-size: 1.5vmin;
+  font-size: 1.0vmin;
   text-anchor: middle;
   dominant-baseline: middle;
+  font-weight: bold;
+  fill: #333;
+  stroke: none;
 }
 
 .segment-detail {

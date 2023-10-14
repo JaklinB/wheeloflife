@@ -27,26 +27,28 @@ function WheelOfLife() {
   return (
     <div className="container">
       <button className="logout-button">Logout</button>
-      <svg className="wheel" viewBox="0 0 200 200">
-        {segments.map((segment, index) => (
-          <path
-            key={segment}
-            className={`wheel-segment ${segment} ${selectedSegment === segment ? "selected" : ""}`}
-            d={`M100,100 L${100 + 100 * Math.cos(index * Math.PI / 3)},${100 + 100 * Math.sin(index * Math.PI / 3)} A100,100 0 0,1 ${100 + 100 * Math.cos((index + 1) * Math.PI / 3)},${100 + 100 * Math.sin((index + 1) * Math.PI / 3)} Z`}
-            onClick={() => setSelectedSegment(segment)}
-          />
-        ))}
-        {segments.map((segment, index) => (
-          <text
-            key={segment}
-            className="segment-text"
-            x={100 + 65 * Math.cos((index + 0.5) * Math.PI / 3)}
-            y={100 + 65 * Math.sin((index + 0.5) * Math.PI / 3)}
-          >
-            {segment}
-          </text>
-        ))}
-      </svg>
+      <div className="wheel">
+        <svg width="100%" height="100%" viewBox="0 0 200 200">
+          {segments.map((segment, index) => (
+            <path
+              key={segment}
+              className={`wheel-segment ${segment} ${selectedSegment === segment ? "selected" : ""}`}
+              d={`M100,100 L${100 + 100 * Math.cos(index * Math.PI / 3)},${100 + 100 * Math.sin(index * Math.PI / 3)} A100,100 0 0,1 ${100 + 100 * Math.cos((index + 1) * Math.PI / 3)},${100 + 100 * Math.sin((index + 1) * Math.PI / 3)} Z`}
+              onClick={() => setSelectedSegment(segment)}
+            />
+          ))}
+          {segments.map((segment, index) => (
+            <text
+              key={segment}
+              className="segment-text"
+              x={100 + 70 * Math.cos((index + 0.5) * Math.PI / 3)}
+              y={100 + 70 * Math.sin((index + 0.5) * Math.PI / 3)}
+            >
+              {segment}
+            </text>
+          ))}
+        </svg>
+      </div>
       {selectedSegment && (
         <div className="segment-detail">
           <h3>{selectedSegment}</h3>
