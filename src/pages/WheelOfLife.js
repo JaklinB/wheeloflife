@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { db } from "../config/firebase";
-import { Link } from 'react-router-dom';
 import {
   collection,
   addDoc,
@@ -11,8 +10,11 @@ import {
   doc,
 } from "firebase/firestore";
 import "./WheelOfLife.css";
+import { useAuth } from "../contexts/AuthContext";
 
 function WheelOfLife() {
+  const { currentUser } = useAuth();
+
   const [selectedSegment, setSelectedSegment] = useState(null);
   const [ratings, setRatings] = useState({
     career: 0,
@@ -30,39 +32,61 @@ function WheelOfLife() {
     appearance: [""],
     hobbies: [""],
   });
-  const [activeNav, setActiveNav] = useState("wheel");
+
   const segments = Object.keys(ratings);
 
   useEffect(() => {
+    if (!currentUser) {
+      return;
+    }
+
     const loadDataFromFirebase = async () => {
       const userCollection = collection(db, "users");
-      const querySnapshot = await getDocs(userCollection);
-      querySnapshot.forEach((doc) => {
-        const data = doc.data();
-        if (Array.isArray(data.feedback)) {
-          setFeedback((prev) => ({ ...prev, [data.segment]: data.feedback }));
-        }
-        setRatings((prev) => ({ ...prev, [data.segment]: data.rating }));
-      });
+      const q = query(userCollection, where("uid", "==", currentUser.uid));
+      const querySnapshot = await getDocs(q);
+
+      if (!querySnapshot.empty) {
+        const userData = querySnapshot.docs[0].data();
+        setRatings(userData.ratings || ratings);
+        setFeedback(userData.feedback || feedback);
+      }
     };
+
     loadDataFromFirebase();
-  }, []);
+  }, [currentUser]);
 
   const handleSave = () => {
+    if (!currentUser || !selectedSegment) {
+      return;
+    }
+
     const userCollection = collection(db, "users");
-    const q = query(userCollection, where("segment", "==", selectedSegment));
+    const q = query(userCollection, where("uid", "==", currentUser.uid));
+
     getDocs(q).then((querySnapshot) => {
       if (querySnapshot.empty) {
         addDoc(userCollection, {
-          segment: selectedSegment,
-          rating: ratings[selectedSegment],
-          feedback: feedback[selectedSegment],
+          uid: currentUser.uid,
+          ratings: {
+            ...ratings,
+            [selectedSegment]: ratings[selectedSegment],
+          },
+          feedback: {
+            ...feedback,
+            [selectedSegment]: feedback[selectedSegment],
+          },
         });
       } else {
         const docRef = doc(db, "users", querySnapshot.docs[0].id);
         updateDoc(docRef, {
-          rating: ratings[selectedSegment],
-          feedback: feedback[selectedSegment],
+          ratings: {
+            ...ratings,
+            [selectedSegment]: ratings[selectedSegment],
+          },
+          feedback: {
+            ...feedback,
+            [selectedSegment]: feedback[selectedSegment],
+          },
         });
       }
     });
