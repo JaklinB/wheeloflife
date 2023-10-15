@@ -1,7 +1,8 @@
-body, html {
+body,
+html {
   margin: 0;
   padding: 0;
-  font-family: 'Arial', sans-serif;
+  font-family: "Arial", sans-serif;
   height: 100%;
 }
 
@@ -28,7 +29,7 @@ body, html {
 .auth-form h2 {
   text-align: center;
   margin-bottom: 25px;
-  color: #252B48;
+  color: #252b48;
 }
 
 .auth-form form {
@@ -38,19 +39,21 @@ body, html {
 }
 
 .auth-form input {
+  width: 100%;
+  box-sizing: border-box;
   padding: 12px;
-  border: none;
+  border: 1px solid #ccc;
   border-radius: 10px;
+  margin: 10px 0;
   box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
   background: rgba(255, 255, 255, 0.1);
-  color: #252B48;
-  margin: 10px;
+  color: #252b48;
 }
 
 .auth-form button {
   padding: 12px;
-  background-color: #5B9A8B;
-  color: #F7E987;
+  background-color: #5b9a8b;
+  color: #f7e987;
   border: none;
   border-radius: 10px;
   cursor: pointer;
@@ -65,12 +68,12 @@ body, html {
 .auth-form p {
   text-align: center;
   margin-top: 20px;
-  color: #252B48;
+  color: #252b48;
   font-size: 14px;
 }
 
 .auth-form a {
-  color: #F7E987;
+  color: #f7e987;
   text-decoration: none;
   margin-left: 5px;
 }
@@ -92,14 +95,14 @@ body, html {
 }
 
 .custom-alert p {
-  color: #252B48;
+  color: #252b48;
   margin-bottom: 10px;
 }
 
 .custom-alert button {
   padding: 10px 15px;
-  background-color: #5B9A8B;
-  color: #F7E987;
+  background-color: #5b9a8b;
+  color: #f7e987;
   border: none;
   border-radius: 10px;
   cursor: pointer;
@@ -183,11 +186,19 @@ nav a:hover {
   nav {
     display: none;
   }
+
+  .auth-form {
+    max-width: 200px;
+  }
 }
 
 @media (min-width: 769px) {
   .burger-menu,
   .responsive-menu {
     display: none;
+  }
+
+  .auth-form {
+    max-width: 400px;
   }
 }
