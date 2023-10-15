@@ -3,7 +3,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 100vh;
+  min-height: 100%;
 }
 
 .logout-button {
@@ -19,7 +19,7 @@
 .wheel-segment {
   fill-opacity: 0.7;
   stroke-width: 0.5;
-  stroke: #FFF;
+  stroke: #fff;
   transition: fill-opacity 0.3s ease;
 }
 
@@ -27,46 +27,149 @@
   fill-opacity: 0.9;
 }
 
-.career { fill: #FF9AA2; }
-.health { fill: #FFB7B2; }
-.personalGrowth { fill: #FFDAC1; }
-.relationships { fill: #E2F0CB; }
-.appearance { fill: #B5EAD7; }
-.hobbies { fill: #C7CEEA; }
-
-.segment-text {
-  font-size: 1.0vmin;
-  text-anchor: middle;
-  dominant-baseline: middle;
-  font-weight: bold;
-  fill: #333;
+.career {
+  fill: #ff9aa2;
+}
+.health {
+  fill: #ffb7b2;
+}
+.personalGrowth {
+  fill: #ffdac1;
+}
+.relationships {
+  fill: #e2f0cb;
+}
+.appearance {
+  fill: #b5ead7;
+}
+.hobbies {
+  fill: #c7ceea;
 }
 
-.segment-detail {
-  margin-top: 20px;
-  background-color: white;
-  padding: 20px;
-  border: 1px solid #ccc;
-  width: 80vmin;
-  display: flex;
-  flex-direction: column;
-  align-items: start;
+.segment-text {
+  font-size: 1vmin;
+  text-anchor: middle;
+  font-weight: bold;
+  fill: #333;
 }
 
 .segment-detail input[type="range"] {
   width: 100%;
 }
 
-.segment-detail span {
-  font-weight: bold;
-  margin-left: 10px;
+.segment-detail {
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 2rem;
+  border-radius: 15px;
+  width: 80vmin;
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  backdrop-filter: blur(10px);
+}
+
+.segment-detail h3 {
+  font-size: 2rem;
+  color: #fff;
+  margin-bottom: 1.5rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.input-group {
+  width: 100%;
+  margin-bottom: 1.5rem;
+  position: relative;
+  display: flex;
+}
+
+.input-group label {
+  font-size: 1.1rem;
+  color: #fff;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+.input-group input[type="text"] {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  border: none;
+  border-radius: 5px;
+  background-color: rgba(255, 255, 255, 0.2);
+  color: #fff;
+  font-size: 1rem;
+}
+
+.input-group input[type="text"]:focus {
+  background-color: rgba(255, 255, 255, 0.3);
+  outline: none;
 }
 
 .segment-detail button {
-  margin-top: 10px;
-  background-color: #4CAF50;
-  color: white;
-  padding: 8px 16px;
+  padding: 0.8rem 1.5rem;
   border: none;
+  border-radius: 5px;
+  background-color: #f67280;
+  color: #445069;
+  font-size: 1rem;
   cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-right: 1rem;
+}
+
+.segment-detail h3.career {
+  color: #ff9aa2;
+}
+
+.segment-detail h3.health {
+  color: #ffb7b2;
+}
+
+.segment-detail h3.personalGrowth {
+  color: #ffdac1;
+}
+
+.segment-detail h3.relationships {
+  color: #e2f0cb;
+}
+
+.segment-detail h3.appearance {
+  color: #b5ead7;
+}
+
+.segment-detail h3.hobbies {
+  color: #c7ceea;
+}
+
+.segment-detail button:last-child {
+  margin-right: 0;
+}
+
+.segment-detail button:hover {
+  background-color: #c06c84;
+}
+
+.segment-detail button.career {
+  background-color: #ff9aa2;
+}
+
+.segment-detail button.health {
+  background-color: #ffb7b2;
+}
+
+.segment-detail button.personalGrowth {
+  background-color: #ffdac1;
+}
+
+.segment-detail button.relationships {
+  background-color: #e2f0cb;
+}
+
+.segment-detail button.appearance {
+  background-color: #b5ead7;
+}
+
+.segment-detail button.hobbies {
+  background-color: #c7ceea;
 }

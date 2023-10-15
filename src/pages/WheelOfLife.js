@@ -124,68 +124,71 @@ function WheelOfLife() {
           </svg>
         </div>
         {selectedSegment && (
-          <div className="segment-detail">
-            <h3>{selectedSegment}</h3>
-            <label>
-              Rating:
+      <div className={`segment-detail ${selectedSegment ? 'active' : ''}`}>
+       <h3 className={selectedSegment}>{selectedSegment}</h3>
+        <label>
+          Rating:
+          <input
+            type="range"
+            min="0"
+            max="10"
+            value={ratings[selectedSegment]}
+            onChange={(e) =>
+              setRatings({ ...ratings, [selectedSegment]: e.target.value })
+            }
+          />
+          <span>{ratings[selectedSegment]}</span>
+        </label>
+        {feedback[selectedSegment] &&
+          feedback[selectedSegment].map((improvement, index) => (
+            <div key={index} className="input-group">
               <input
-                type="range"
-                min="0"
-                max="10"
-                value={ratings[selectedSegment]}
-                onChange={(e) =>
-                  setRatings({ ...ratings, [selectedSegment]: e.target.value })
-                }
+                type="text"
+                value={improvement}
+                onChange={(e) => {
+                  const newFeedback = [...feedback[selectedSegment]];
+                  newFeedback[index] = e.target.value;
+                  setFeedback({
+                    ...feedback,
+                    [selectedSegment]: newFeedback,
+                  });
+                }}
               />
-              <span>{ratings[selectedSegment]}</span>
-            </label>
-            {feedback[selectedSegment] &&
-              feedback[selectedSegment].map((improvement, index) => (
-                <div key={index}>
-                  <label>
-                    Improvement {index + 1}:
-                    <input
-                      type="text"
-                      value={improvement}
-                      onChange={(e) => {
-                        const newFeedback = [...feedback[selectedSegment]];
-                        newFeedback[index] = e.target.value;
-                        setFeedback({
-                          ...feedback,
-                          [selectedSegment]: newFeedback,
-                        });
-                      }}
-                    />
-                  </label>
-                  <button
-                    onClick={() => {
-                      const newFeedback = [...feedback[selectedSegment]];
-                      newFeedback.splice(index, 1);
-                      setFeedback({
-                        ...feedback,
-                        [selectedSegment]: newFeedback,
-                      });
-                    }}
-                  >
-                    Delete
-                  </button>
-                </div>
-              ))}
-            <button
-              onClick={() => {
-                const newFeedback = feedback[selectedSegment]
-                  ? [...feedback[selectedSegment], ""]
-                  : [""];
-                setFeedback({ ...feedback, [selectedSegment]: newFeedback });
-              }}
-            >
-              +
-            </button>
-            <button onClick={handleSave}>Save</button>
-          </div>
-        )}
+              <button
+              className={selectedSegment}
+                onClick={() => {
+                  const newFeedback = [...feedback[selectedSegment]];
+                  newFeedback.splice(index, 1);
+                  setFeedback({
+                    ...feedback,
+                    [selectedSegment]: newFeedback,
+                  });
+                }}
+              >
+                Delete
+              </button>
+            </div>
+          ))}
+        <button
+         className={selectedSegment}
+          onClick={() => {
+            if (!feedback[selectedSegment] || feedback[selectedSegment][feedback[selectedSegment].length - 1] !== "") {
+              const newFeedback = feedback[selectedSegment]
+                ? [...feedback[selectedSegment], ""]
+                : [""];
+              setFeedback({ ...feedback, [selectedSegment]: newFeedback });
+            }
+          }}
+        >
+          Add Improvement
+        </button>
+        <button 
+         className={selectedSegment}
+        onClick={handleSave}>Save</button>
       </div>
-    </div>
+    )}
+  </div>
+  </div>
   );
 }
 
