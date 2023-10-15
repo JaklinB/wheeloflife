@@ -18,6 +18,7 @@ function App() {
                     <Route path="/" element={<Login />} />
                     <Route path="/signup" element={<Signup />} />
                     <Route path="/segmentInput" element={<SegmentInput />} />
+                    <Route path="/segmentInput/about" element={<AboutPage />} />
                     <Route path="/wheeloflife/*" element={
                         <>
                             <Navbar />

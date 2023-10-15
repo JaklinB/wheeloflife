@@ -1,0 +1,77 @@
+.segment-input-container {
+  margin: 20px;
+}
+
+.save-new-segment-button {
+  background-color: #3498db;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  margin-top: 20px;
+}
+
+.save-new-segment-button:hover {
+  background-color: #2980b9;
+}
+
+.segment-input-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+h2 {
+  font-size: 24px;
+}
+
+input {
+  width: 90%;
+  margin: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+button.save-new-segment-button {
+  padding: 10px 15px;
+  background-color: #5b9a8b;
+  color: #f7e987;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+button.save-new-segment-button:hover {
+  background-color: #445069;
+}
+
+p {
+  font-size: 14px;
+  text-align: center;
+  margin-top: 20px;
+}
+
+@media (max-width: 768px) {
+  .segment-input-container {
+    padding: 10px;
+  }
+
+  h2 {
+    font-size: 20px;
+  }
+
+  input {
+    padding: 8px;
+    margin: 8px 0;
+  }
+
+  button.save-new-segment-button {
+    padding: 8px 16px;
+    margin-top: 10px;
+  }
+
+  p {
+    font-size: 12px;
+  }
+}
