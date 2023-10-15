@@ -24,7 +24,7 @@ function Signup() {
         emailRef.current.value,
         passwordRef.current.value
       );
-      navigate("/wheeloflife");
+      navigate("/segmentInput");
     } catch (error) {
       if (error.code === "auth/email-already-in-use") {
         setShowAlert(true);

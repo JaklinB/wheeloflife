@@ -16,53 +16,29 @@ function WheelOfLife() {
   const { currentUser } = useAuth();
 
   const [selectedSegment, setSelectedSegment] = useState(null);
-  const [ratings, setRatings] = useState({
-    career: 0,
-    health: 0,
-    personalGrowth: 0,
-    relationships: 0,
-    appearance: 0,
-    hobbies: 0,
-  });
-  const [feedback, setFeedback] = useState({
-    career: [""],
-    health: [""],
-    personalGrowth: [""],
-    relationships: [""],
-    appearance: [""],
-    hobbies: [""],
-  });
-
+  const [ratings, setRatings] = useState({});
+  const [feedback, setFeedback] = useState({});
   const segments = Object.keys(ratings);
 
   useEffect(() => {
-    if (!currentUser) {
-      return;
-    }
-
+    if (!currentUser) return;
     const loadDataFromFirebase = async () => {
       const userCollection = collection(db, "users");
       const q = query(userCollection, where("uid", "==", currentUser.uid));
       const querySnapshot = await getDocs(q);
-
       if (!querySnapshot.empty) {
         const userData = querySnapshot.docs[0].data();
         setRatings(userData.ratings || ratings);
         setFeedback(userData.feedback || feedback);
       }
     };
-
     loadDataFromFirebase();
   }, [currentUser]);
 
   const handleSave = () => {
-    if (!currentUser || !selectedSegment) {
-      return;
-    }
-
+    if (!currentUser || !selectedSegment) return;
     const userCollection = collection(db, "users");
     const q = query(userCollection, where("uid", "==", currentUser.uid));
-
     getDocs(q).then((querySnapshot) => {
       if (querySnapshot.empty) {
         addDoc(userCollection, {
@@ -94,101 +70,137 @@ function WheelOfLife() {
 
   return (
     <div className="container">
-      <div>
-        <div className="wheel">
-          <svg width="100%" height="100%" viewBox="0 0 200 200">
-            {segments.map((segment, index) => (
-              <path
-                key={segment}
-                className={`wheel-segment ${segment} ${
-                  selectedSegment === segment ? "selected" : ""
-                }`}
-                d={`M100,100 L${100 + 100 * Math.cos((index * Math.PI) / 3)},${
-                  100 + 100 * Math.sin((index * Math.PI) / 3)
-                } A100,100 0 0,1 ${
-                  100 + 100 * Math.cos(((index + 1) * Math.PI) / 3)
-                },${100 + 100 * Math.sin(((index + 1) * Math.PI) / 3)} Z`}
-                onClick={() => setSelectedSegment(segment)}
-              />
-            ))}
-            {segments.map((segment, index) => (
-              <text
-                key={segment}
-                className="segment-text"
-                x={100 + 70 * Math.cos(((index + 0.5) * Math.PI) / 3)}
-                y={100 + 70 * Math.sin(((index + 0.5) * Math.PI) / 3)}
-              >
-                {segment}
-              </text>
-            ))}
-          </svg>
-        </div>
-        {selectedSegment && (
-      <div className={`segment-detail ${selectedSegment ? 'active' : ''}`}>
-       <h3 className={selectedSegment}>{selectedSegment}</h3>
-        <label>
-          Rating:
-          <input
-            type="range"
-            min="0"
-            max="10"
-            value={ratings[selectedSegment]}
-            onChange={(e) =>
-              setRatings({ ...ratings, [selectedSegment]: e.target.value })
-            }
-          />
-          <span>{ratings[selectedSegment]}</span>
-        </label>
-        {feedback[selectedSegment] &&
-          feedback[selectedSegment].map((improvement, index) => (
-            <div key={index} className="input-group">
-              <input
-                type="text"
-                value={improvement}
-                onChange={(e) => {
-                  const newFeedback = [...feedback[selectedSegment]];
-                  newFeedback[index] = e.target.value;
-                  setFeedback({
-                    ...feedback,
-                    [selectedSegment]: newFeedback,
-                  });
-                }}
-              />
-              <button
-              className={selectedSegment}
-                onClick={() => {
-                  const newFeedback = [...feedback[selectedSegment]];
-                  newFeedback.splice(index, 1);
-                  setFeedback({
-                    ...feedback,
-                    [selectedSegment]: newFeedback,
-                  });
-                }}
-              >
-                Delete
-              </button>
-            </div>
+      <div className="wheel">
+        <svg viewBox="0 0 200 200">
+          {segments.map((segment, index) => (
+            <path
+              key={segment}
+              className={`wheel-segment ${segment} ${
+                selectedSegment === segment ? "selected" : ""
+              }`}
+              d={`M100,100 L${100 + 100 * Math.cos((index * Math.PI) / 3)},${
+                100 + 100 * Math.sin((index * Math.PI) / 3)
+              } A100,100 0 0,1 ${
+                100 + 100 * Math.cos(((index + 1) * Math.PI) / 3)
+              },${100 + 100 * Math.sin(((index + 1) * Math.PI) / 3)} Z`}
+              onClick={() => setSelectedSegment(segment)}
+              style={{ fill: `var(--color-${index + 1})` }}
+            />
           ))}
-        <button
-         className={selectedSegment}
-          onClick={() => {
-            if (!feedback[selectedSegment] || feedback[selectedSegment][feedback[selectedSegment].length - 1] !== "") {
-              const newFeedback = feedback[selectedSegment]
-                ? [...feedback[selectedSegment], ""]
-                : [""];
-              setFeedback({ ...feedback, [selectedSegment]: newFeedback });
-            }
+          {segments.map((segment, index) => (
+            <text
+              key={segment}
+              className="segment-text"
+              x={100 + 70 * Math.cos(((index + 0.5) * Math.PI) / 3)}
+              y={100 + 70 * Math.sin(((index + 0.5) * Math.PI) / 3)}
+            >
+              {segment}
+            </text>
+          ))}
+        </svg>
+      </div>
+      {selectedSegment && (
+        <div
+          className="segment-details"
+          style={{
+            color: `var(--color-${segments.indexOf(selectedSegment) + 1})`,
           }}
         >
-          Add Improvement
-        </button>
-        <button 
-         className={selectedSegment}
-        onClick={handleSave}>Save</button>
-      </div>
-    )}
-  </div>
-  </div>
+          <h3
+            style={{
+              color: `var(--color-${segments.indexOf(selectedSegment) + 1})`,
+            }}
+          >
+            {selectedSegment}
+          </h3>
+          <label>
+            Rating:
+            <input
+              type="range"
+              min="0"
+              max="10"
+              value={ratings[selectedSegment]}
+              onChange={(e) =>
+                setRatings({ ...ratings, [selectedSegment]: e.target.value })
+              }
+            />
+            <span>{ratings[selectedSegment]}</span>
+          </label>
+          {feedback[selectedSegment] &&
+            feedback[selectedSegment].map((improvement, index) => (
+              <div key={index} className="input-group">
+                <input
+                  type="text"
+                  value={improvement}
+                  onChange={(e) => {
+                    const newFeedback = [...feedback[selectedSegment]];
+                    newFeedback[index] = e.target.value;
+                    setFeedback({
+                      ...feedback,
+                      [selectedSegment]: newFeedback,
+                    });
+                  }}
+                />
+                <button
+                  className={selectedSegment}
+                  id="selected-segment"
+                  style={{
+                    backgroundColor: `var(--color-${
+                      segments.indexOf(selectedSegment) + 1
+                    })`,
+                  }}
+                  onClick={() => {
+                    const newFeedback = [...feedback[selectedSegment]];
+                    newFeedback.splice(index, 1);
+                    setFeedback({
+                      ...feedback,
+                      [selectedSegment]: newFeedback,
+                    });
+                  }}
+                >
+                  Delete
+                </button>
+              </div>
+            ))}
+          <button
+            className={selectedSegment}
+            id="selected-segment"
+            style={{
+              backgroundColor: `var(--color-${
+                segments.indexOf(selectedSegment) + 1
+              })`,
+            }}
+            onClick={() => {
+              if (
+                !feedback[selectedSegment] ||
+                feedback[selectedSegment][
+                  feedback[selectedSegment].length - 1
+                ] !== ""
+              ) {
+                const newFeedback = feedback[selectedSegment]
+                  ? [...feedback[selectedSegment], ""]
+                  : [""];
+                setFeedback({ ...feedback, [selectedSegment]: newFeedback });
+              }
+            }}
+          >
+            Add Improvement
+          </button>
+          <button
+            className={selectedSegment}
+            id="selected-segment"
+            style={{
+              backgroundColor: `var(--color-${
+                segments.indexOf(selectedSegment) + 1
+              })`,
+            }}
+            onClick={handleSave}
+          >
+            Save
+          </button>
+        </div>
+      )}
+    </div>
   );
 }
 

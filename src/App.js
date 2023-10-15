@@ -7,6 +7,7 @@ import WheelOfLife from './pages/WheelOfLife';
 import AboutPage from './pages/AboutPage';
 import ImprovementsPage from './pages/ImprovementsPage';
 import Navbar from './components/NavBar';
+import SegmentInput from './pages/SegmentInput';
 import './App.css';
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
                 <Routes>
                     <Route path="/" element={<Login />} />
                     <Route path="/signup" element={<Signup />} />
+                    <Route path="/segmentInput" element={<SegmentInput />} />
                     <Route path="/wheeloflife/*" element={
                         <>
                             <Navbar />

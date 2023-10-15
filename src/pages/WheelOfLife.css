@@ -1,10 +1,11 @@
-body, html {
+body,
+html {
   margin: 0;
   padding: 0;
-  font-family: 'Arial', sans-serif;
-  min-height: 100vh; 
-  background: linear-gradient(45deg, #F7E987, #5B9A8B, #445069);
-  background-attachment: fixed; 
+  font-family: "Arial", sans-serif;
+  min-height: 100vh;
+  background: linear-gradient(45deg, #f7e987, #5b9a8b, #445069);
+  background-attachment: fixed;
 }
 
 .container {
@@ -14,10 +15,6 @@ body, html {
   justify-content: center;
   min-height: 100%;
   margin: 20px;
-}
-
-.logout-button {
-  margin-bottom: 20px;
 }
 
 .wheel {
@@ -37,34 +34,11 @@ body, html {
   fill-opacity: 0.9;
 }
 
-.career {
-  fill: #ff9aa2;
-}
-.health {
-  fill: #ffb7b2;
-}
-.personalGrowth {
-  fill: #ffdac1;
-}
-.relationships {
-  fill: #e2f0cb;
-}
-.appearance {
-  fill: #b5ead7;
-}
-.hobbies {
-  fill: #c7ceea;
-}
-
 .segment-text {
   font-size: 1vmin;
   text-anchor: middle;
   font-weight: bold;
   fill: #333;
-}
-
-.segment-detail input[type="range"] {
-  width: 100%;
 }
 
 .segment-detail {
@@ -77,14 +51,8 @@ body, html {
   flex-direction: column;
   align-items: center;
   backdrop-filter: blur(10px);
-}
-
-.segment-detail h3 {
-  font-size: 2rem;
-  color: #fff;
-  margin-bottom: 1.5rem;
-  text-transform: uppercase;
-  letter-spacing: 2px;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 .input-group {
@@ -92,13 +60,6 @@ body, html {
   margin-bottom: 1.5rem;
   position: relative;
   display: flex;
-}
-
-.input-group label {
-  font-size: 1.1rem;
-  color: #fff;
-  margin-bottom: 0.5rem;
-  display: block;
 }
 
 .input-group input[type="text"] {
@@ -116,11 +77,10 @@ body, html {
   outline: none;
 }
 
-.segment-detail button {
+#selected-segment {
   padding: 0.8rem 1.5rem;
   border: none;
   border-radius: 5px;
-  background-color: #f67280;
   color: #445069;
   font-size: 1rem;
   cursor: pointer;
@@ -128,58 +88,39 @@ body, html {
   margin-right: 1rem;
 }
 
-.segment-detail h3.career {
-  color: #ff9aa2;
+:root {
+  --color-1: #ff9aa2;
 }
-
-.segment-detail h3.health {
-  color: #ffb7b2;
+:root {
+  --color-2: #ffb7b2;
 }
-
-.segment-detail h3.personalGrowth {
-  color: #ffdac1;
+:root {
+  --color-3: #ffdac1;
 }
-
-.segment-detail h3.relationships {
-  color: #e2f0cb;
+:root {
+  --color-4: #e2f0cb;
 }
-
-.segment-detail h3.appearance {
-  color: #b5ead7;
+:root {
+  --color-5: #b5ead7;
 }
-
-.segment-detail h3.hobbies {
-  color: #c7ceea;
+:root {
+  --color-6: #c7ceea;
 }
-
-.segment-detail button:last-child {
-  margin-right: 0;
+:root {
+  --color-7: #95afc0;
 }
-
-.segment-detail button:hover {
-  background-color: #c06c84;
+:root {
+  --color-8: #70a1ff;
 }
-
-.segment-detail button.career {
-  background-color: #ff9aa2;
+:root {
+  --color-9: #7bed9f;
 }
-
-.segment-detail button.health {
-  background-color: #ffb7b2;
+:root {
+  --color-10: #ff6b81;
 }
-
-.segment-detail button.personalGrowth {
-  background-color: #ffdac1;
+:root {
+  --color-11: #ff4757;
 }
-
-.segment-detail button.relationships {
-  background-color: #e2f0cb;
-}
-
-.segment-detail button.appearance {
-  background-color: #b5ead7;
-}
-
-.segment-detail button.hobbies {
-  background-color: #c7ceea;
+:root {
+  --color-12: #dfe4ea;
 }
