@@ -11,6 +11,7 @@ import {
 } from "firebase/firestore";
 import "./WheelOfLife.css";
 import { useAuth } from "../contexts/AuthContext";
+import CustomAlert from "../components/CustomAlert";
 
 function WheelOfLife() {
   const { currentUser } = useAuth();
@@ -18,6 +19,7 @@ function WheelOfLife() {
   const [selectedSegment, setSelectedSegment] = useState(null);
   const [ratings, setRatings] = useState({});
   const [feedback, setFeedback] = useState({});
+  const [showAlert, setShowAlert] = useState(false);
   const segments = Object.keys(ratings);
 
   useEffect(() => {
@@ -37,6 +39,12 @@ function WheelOfLife() {
 
   const handleSave = () => {
     if (!currentUser || !selectedSegment) return;
+
+    if (feedback[selectedSegment] && feedback[selectedSegment][feedback[selectedSegment].length - 1] === "") {
+        setShowAlert(true);
+        return;
+    }
+
     const userCollection = collection(db, "users");
     const q = query(userCollection, where("uid", "==", currentUser.uid));
     getDocs(q).then((querySnapshot) => {
@@ -66,7 +74,7 @@ function WheelOfLife() {
         });
       }
     });
-  };
+};
 
   return (
     <div className="container">
@@ -200,6 +208,7 @@ function WheelOfLife() {
           </button>
         </div>
       )}
+      {showAlert && <CustomAlert message="Improvement value cannot be empty." onClose={() => setShowAlert(false)} />}
     </div>
   );
 }
