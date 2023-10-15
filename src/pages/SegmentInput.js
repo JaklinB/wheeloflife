@@ -24,9 +24,24 @@ function SegmentInput() {
   const handleSave = async () => {
     if (!currentUser) return;
 
+    const hasEmptySegment = segments.some((segment) => segment.trim() === "");
+    const hasLongSegment = segments.some((segment) => segment.length > 20);
+
+    if (hasEmptySegment) {
+      setAlertMessage("Please fill in all segments.");
+      setShowAlert(true);
+      return;
+    }
+
+    if (hasLongSegment) {
+      setAlertMessage("Segments should not exceed 20 characters.");
+      setShowAlert(true);
+      return;
+    }
+
     const filteredSegments = segments
       .filter((segment) => segment.trim() !== "")
-      .map((segment) => segment.trim().slice(0, 20));
+      .map((segment) => segment.trim());
 
     if (filteredSegments.length === 0) {
       setAlertMessage("Please enter valid segments.");
