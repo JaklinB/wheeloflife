@@ -5,6 +5,8 @@ import "../App.css";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import CustomAlert from "./CustomAlert";
+import Modal from "./Modal";
+import { sendPasswordResetEmail } from "firebase/auth";
 
 function Login() {
   const emailRef = useRef();
@@ -15,6 +17,21 @@ function Login() {
 
   const [showAlert, setShowAlert] = React.useState(false);
   const [alertMessage, setAlertMessage] = React.useState("");
+
+  const [isModalOpen, setIsModalOpen] = React.useState(false);
+  const [resetEmail, setResetEmail] = React.useState("");
+  const [resetMessage, setResetMessage] = React.useState("");
+
+  const handleForgotPassword = async (e) => {
+    e.preventDefault();
+    try {
+      await sendPasswordResetEmail(auth, resetEmail);
+      setResetMessage("Password reset email sent!");
+    } catch (error) {
+      setResetMessage("Error sending password reset email.");
+      console.error("Error sending password reset email:", error);
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -33,7 +50,7 @@ function Login() {
         error.code === "auth/invalid-login-credentials"
       ) {
         setAlertMessage("Incorrect email or password.");
-        setShowAlert(true); 
+        setShowAlert(true);
       } else {
         console.error("Failed to log in:", error);
       }
@@ -56,11 +73,29 @@ function Login() {
           placeholder="Password"
           required
         />
+        <p id="forgot-pass-p" onClick={() => setIsModalOpen(true)} style={{ cursor: "pointer" }}>
+          Forgot Password?
+        </p>
         <button type="submit">Login</button>
         <p>
           Don't have an account? <Link to="/signup">Sign Up</Link>
         </p>
       </form>
+
+      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+        <h2>Reset Password</h2>
+        <form onSubmit={handleForgotPassword}>
+          <input
+            type="email"
+            value={resetEmail}
+            onChange={(e) => setResetEmail(e.target.value)}
+            placeholder="Enter your email"
+            required
+          />
+          <button type="submit">Send Reset Email</button>
+        </form>
+        {resetMessage && <p>{resetMessage}</p>}
+      </Modal>
     </div>
   );
 }
