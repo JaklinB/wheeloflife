@@ -35,9 +35,15 @@ function ImprovementsPage() {
   }, [currentUser]);
 
   const handleAddImprovement = async (segment) => {
+    if (!newImprovements[segment] || newImprovements[segment].trim() === "") {
+      return;
+    }
+
     const updatedImprovements = {
       ...improvements,
-      [segment]: [...improvements[segment], newImprovements[segment]],
+      [segment]: improvements[segment]
+        ? [...improvements[segment], newImprovements[segment]]
+        : [newImprovements[segment]],
     };
     setImprovements(updatedImprovements);
 
@@ -78,7 +84,7 @@ function ImprovementsPage() {
             <div className="progress-bar">
               <div
                 className="progress"
-                style={{ width: `${ratings[segment]*10}%` }}
+                style={{ width: `${ratings[segment] * 10}%` }}
               ></div>
             </div>
             <div className="input-container">
