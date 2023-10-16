@@ -39,23 +39,26 @@ function WheelOfLife() {
 
   const handleSave = () => {
     if (!currentUser || !selectedSegment) return;
-  
+
     const definedRatings = { ...ratings };
-    segments.forEach(segment => {
+    segments.forEach((segment) => {
       if (!definedRatings[segment]) definedRatings[segment] = 0;
     });
 
     const definedFeedback = { ...feedback };
-    segments.forEach(segment => {
+    segments.forEach((segment) => {
       if (!definedFeedback[segment]) {
         definedFeedback[segment] = [];
       } else {
-        while (definedFeedback[segment].length && !definedFeedback[segment][definedFeedback[segment].length - 1]) {
+        while (
+          definedFeedback[segment].length &&
+          !definedFeedback[segment][definedFeedback[segment].length - 1]
+        ) {
           definedFeedback[segment].pop();
         }
       }
     });
-  
+
     const userCollection = collection(db, "users");
     const q = query(userCollection, where("uid", "==", currentUser.uid));
     getDocs(q).then((querySnapshot) => {
@@ -63,17 +66,17 @@ function WheelOfLife() {
         addDoc(userCollection, {
           uid: currentUser.uid,
           ratings: definedRatings,
-          feedback: definedFeedback
+          feedback: definedFeedback,
         });
       } else {
         const docRef = doc(db, "users", querySnapshot.docs[0].id);
         updateDoc(docRef, {
           ratings: definedRatings,
-          feedback: definedFeedback
+          feedback: definedFeedback,
         });
       }
     });
-  };  
+  };
 
   return (
     <div className="container">
@@ -118,7 +121,7 @@ function WheelOfLife() {
           <span
             style={{
               color: `var(--color-${segments.indexOf(selectedSegment) + 1})`,
-              fontWeight: 'bold'
+              fontWeight: "bold",
             }}
           >
             {" "}
@@ -175,45 +178,47 @@ function WheelOfLife() {
                 </button>
               </div>
             ))}
-          <button
-            className={selectedSegment}
-            id="selected-segment"
-            style={{
-              backgroundColor: `var(--color-${
-                segments.indexOf(selectedSegment) + 1
-              })`,
-            }}
-            onClick={() => {
-              if (
-                !feedback[selectedSegment] ||
-                feedback[selectedSegment][
-                  feedback[selectedSegment].length - 1
-                ] !== ""
-              ) {
-                const newFeedback = feedback[selectedSegment]
-                  ? [...feedback[selectedSegment], ""]
-                  : [""];
-                setFeedback({ ...feedback, [selectedSegment]: newFeedback });
-              }
-            }}
-          >
-            Add Improvement
-          </button>
-          <button
-            className={selectedSegment}
-            id="selected-segment"
-            style={{
-              backgroundColor: `var(--color-${
-                segments.indexOf(selectedSegment) + 1
-              })`,
-            }}
-            onClick={() => {
-              handleSave();
-              setSelectedSegment(null);
-            }}            
-          >
-            Save
-          </button>
+          <div className="button-container">
+            <button
+              className={selectedSegment}
+              id="selected-segment"
+              style={{
+                backgroundColor: `var(--color-${
+                  segments.indexOf(selectedSegment) + 1
+                })`,
+              }}
+              onClick={() => {
+                if (
+                  !feedback[selectedSegment] ||
+                  feedback[selectedSegment][
+                    feedback[selectedSegment].length - 1
+                  ] !== ""
+                ) {
+                  const newFeedback = feedback[selectedSegment]
+                    ? [...feedback[selectedSegment], ""]
+                    : [""];
+                  setFeedback({ ...feedback, [selectedSegment]: newFeedback });
+                }
+              }}
+            >
+              Add Improvement
+            </button>
+            <button
+              className={selectedSegment}
+              id="selected-segment"
+              style={{
+                backgroundColor: `var(--color-${
+                  segments.indexOf(selectedSegment) + 1
+                })`,
+              }}
+              onClick={() => {
+                handleSave();
+                setSelectedSegment(null);
+              }}
+            >
+              Save
+            </button>
+          </div>
         </div>
       )}
       {showAlert && (
