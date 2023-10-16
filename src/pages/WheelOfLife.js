@@ -122,6 +122,7 @@ function WheelOfLife() {
           <span
             style={{
               color: `var(--color-${segments.indexOf(selectedSegment) + 1})`,
+              fontWeight: 'bold'
             }}
           >
             {" "}
