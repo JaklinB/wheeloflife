@@ -112,109 +112,112 @@ function WheelOfLife() {
       </div>
       {selectedSegment && (
         <div className="glass-card">
-          <div
-            className="segment-details"
+          <h3
             style={{
               color: `var(--color-${segments.indexOf(selectedSegment) + 1})`,
             }}
           >
-            <h3
-              style={{
-                color: `var(--color-${segments.indexOf(selectedSegment) + 1})`,
-              }}
-            >
-              {selectedSegment}
-            </h3>
-            <label>
-              Rating:
-              <input
-                type="range"
-                min="0"
-                max="10"
-                value={ratings[selectedSegment]}
-                onChange={(e) =>
-                  setRatings({ ...ratings, [selectedSegment]: e.target.value })
-                }
-              />
-              <span>{ratings[selectedSegment]}</span>
-            </label>
-            {feedback[selectedSegment] &&
-              feedback[selectedSegment].map((improvement, index) => (
-                <div key={index} className="input-group">
-                  <input
-                    type="text"
-                    value={improvement}
-                    onChange={(e) => {
-                      const newFeedback = [...feedback[selectedSegment]];
-                      newFeedback[index] = e.target.value;
-                      setFeedback({
-                        ...feedback,
-                        [selectedSegment]: newFeedback,
-                      });
-                    }}
-                  />
-                  <button
-                    className={selectedSegment}
-                    id="selected-segment"
-                    style={{
-                      backgroundColor: `var(--color-${
-                        segments.indexOf(selectedSegment) + 1
-                      })`,
-                    }}
-                    onClick={() => {
-                      const newFeedback = [...feedback[selectedSegment]];
-                      newFeedback.splice(index, 1);
-                      setFeedback({
-                        ...feedback,
-                        [selectedSegment]: newFeedback,
-                      });
-                    }}
-                  >
-                    Delete
-                  </button>
-                </div>
-              ))}
-            <button
-              className={selectedSegment}
-              id="selected-segment"
-              style={{
-                backgroundColor: `var(--color-${
-                  segments.indexOf(selectedSegment) + 1
-                })`,
-              }}
-              onClick={() => {
-                if (
-                  !feedback[selectedSegment] ||
-                  feedback[selectedSegment][
-                    feedback[selectedSegment].length - 1
-                  ] !== ""
-                ) {
-                  const newFeedback = feedback[selectedSegment]
-                    ? [...feedback[selectedSegment], ""]
-                    : [""];
-                  setFeedback({ ...feedback, [selectedSegment]: newFeedback });
-                }
-              }}
-            >
-              Add Improvement
-            </button>
-            <button
-              className={selectedSegment}
-              id="selected-segment"
-              style={{
-                backgroundColor: `var(--color-${
-                  segments.indexOf(selectedSegment) + 1
-                })`,
-              }}
-              onClick={() => {
-                setRatings({ ...ratings, [selectedSegment]: null });
-                handleSave();
-                setSelectedSegment(null);
-              }}
-            >
-              Save
-            </button>
-          </div>
+            {selectedSegment}
+          </h3>
+          <span
+            style={{
+              color: `var(--color-${segments.indexOf(selectedSegment) + 1})`,
+            }}
+          >
+            {" "}
+            Rating:{ratings[selectedSegment]}
+          </span>
+          <input
+            className="range-slider"
+            type="range"
+            min="0"
+            max="10"
+            style={{
+              backgroundColor: `var(--color-${
+                segments.indexOf(selectedSegment) + 1
+              })`,
+            }}
+            value={ratings[selectedSegment]}
+            onChange={(e) =>
+              setRatings({ ...ratings, [selectedSegment]: e.target.value })
+            }
+          />
+          {feedback[selectedSegment] &&
+            feedback[selectedSegment].map((improvement, index) => (
+              <div key={index} className="input-group">
+                <input
+                  type="text"
+                  value={improvement}
+                  onChange={(e) => {
+                    const newFeedback = [...feedback[selectedSegment]];
+                    newFeedback[index] = e.target.value;
+                    setFeedback({
+                      ...feedback,
+                      [selectedSegment]: newFeedback,
+                    });
+                  }}
+                />
+                <button
+                  className={selectedSegment}
+                  id="selected-segment"
+                  style={{
+                    backgroundColor: `var(--color-${
+                      segments.indexOf(selectedSegment) + 1
+                    })`,
+                  }}
+                  onClick={() => {
+                    const newFeedback = [...feedback[selectedSegment]];
+                    newFeedback.splice(index, 1);
+                    setFeedback({
+                      ...feedback,
+                      [selectedSegment]: newFeedback,
+                    });
+                  }}
+                >
+                  Delete
+                </button>
+              </div>
+            ))}
+          <button
+            className={selectedSegment}
+            id="selected-segment"
+            style={{
+              backgroundColor: `var(--color-${
+                segments.indexOf(selectedSegment) + 1
+              })`,
+            }}
+            onClick={() => {
+              if (
+                !feedback[selectedSegment] ||
+                feedback[selectedSegment][
+                  feedback[selectedSegment].length - 1
+                ] !== ""
+              ) {
+                const newFeedback = feedback[selectedSegment]
+                  ? [...feedback[selectedSegment], ""]
+                  : [""];
+                setFeedback({ ...feedback, [selectedSegment]: newFeedback });
+              }
+            }}
+          >
+            Add Improvement
+          </button>
+          <button
+            className={selectedSegment}
+            id="selected-segment"
+            style={{
+              backgroundColor: `var(--color-${
+                segments.indexOf(selectedSegment) + 1
+              })`,
+            }}
+            onClick={() => {
+              setRatings({ ...ratings, [selectedSegment]: null });
+              handleSave();
+              setSelectedSegment(null);
+            }}
+          >
+            Save
+          </button>
         </div>
       )}
       {showAlert && (
