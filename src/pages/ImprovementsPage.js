@@ -13,30 +13,10 @@ import "./ImprovementsPage.css";
 
 function ImprovementsPage() {
   const { currentUser } = useAuth();
-  const [improvements, setImprovements] = useState({
-    career: [],
-    health: [],
-    personalGrowth: [],
-    relationships: [],
-    appearance: [],
-    hobbies: [],
-  });
-  const [newImprovements, setNewImprovements] = useState({
-    career: "",
-    health: "",
-    personalGrowth: "",
-    relationships: "",
-    appearance: "",
-    hobbies: "",
-  });
-  const [ratings, setRatings] = useState({
-    career: 0,
-    health: 0,
-    personalGrowth: 0,
-    relationships: 0,
-    appearance: 0,
-    hobbies: 0,
-  });
+  const [improvements, setImprovements] = useState({});
+  const [newImprovements, setNewImprovements] = useState({});
+  const [ratings, setRatings] = useState({});
+  const [segments, setSegments] = useState([]);
 
   useEffect(() => {
     if (!currentUser) return;
@@ -46,8 +26,9 @@ function ImprovementsPage() {
       const querySnapshot = await getDocs(q);
       if (!querySnapshot.empty) {
         const userData = querySnapshot.docs[0].data();
-        setImprovements(userData.feedback || improvements);
-        setRatings(userData.ratings || ratings);
+        setRatings(userData.ratings || {});
+        setImprovements(userData.feedback || {});
+        setSegments(Object.keys(userData.ratings || {}));
       }
     };
     fetchData();
@@ -97,7 +78,7 @@ function ImprovementsPage() {
             <div className="progress-bar">
               <div
                 className="progress"
-                style={{ width: `${ratings[segment]}%` }}
+                style={{ width: `${ratings[segment]*10}%` }}
               ></div>
             </div>
             <div className="input-container">

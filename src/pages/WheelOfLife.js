@@ -39,45 +39,41 @@ function WheelOfLife() {
 
   const handleSave = () => {
     if (!currentUser || !selectedSegment) return;
+  
+    const definedRatings = { ...ratings };
+    segments.forEach(segment => {
+      if (!definedRatings[segment]) definedRatings[segment] = 0;
+    });
 
-    if (
-      feedback[selectedSegment] &&
-      feedback[selectedSegment][feedback[selectedSegment].length - 1] === ""
-    ) {
-      setShowAlert(true);
-      return;
-    }
-
+    const definedFeedback = { ...feedback };
+    segments.forEach(segment => {
+      if (!definedFeedback[segment]) {
+        definedFeedback[segment] = [];
+      } else {
+        while (definedFeedback[segment].length && !definedFeedback[segment][definedFeedback[segment].length - 1]) {
+          definedFeedback[segment].pop();
+        }
+      }
+    });
+  
     const userCollection = collection(db, "users");
     const q = query(userCollection, where("uid", "==", currentUser.uid));
     getDocs(q).then((querySnapshot) => {
       if (querySnapshot.empty) {
         addDoc(userCollection, {
           uid: currentUser.uid,
-          ratings: {
-            ...ratings,
-            [selectedSegment]: ratings[selectedSegment],
-          },
-          feedback: {
-            ...feedback,
-            [selectedSegment]: feedback[selectedSegment],
-          },
+          ratings: definedRatings,
+          feedback: definedFeedback
         });
       } else {
         const docRef = doc(db, "users", querySnapshot.docs[0].id);
         updateDoc(docRef, {
-          ratings: {
-            ...ratings,
-            [selectedSegment]: ratings[selectedSegment],
-          },
-          feedback: {
-            ...feedback,
-            [selectedSegment]: feedback[selectedSegment],
-          },
+          ratings: definedRatings,
+          feedback: definedFeedback
         });
       }
     });
-  };
+  };  
 
   return (
     <div className="container">
@@ -212,10 +208,9 @@ function WheelOfLife() {
               })`,
             }}
             onClick={() => {
-              setRatings({ ...ratings, [selectedSegment]: null });
               handleSave();
               setSelectedSegment(null);
-            }}
+            }}            
           >
             Save
           </button>
