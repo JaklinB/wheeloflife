@@ -219,6 +219,19 @@ nav a:hover {
   color: #F7E987;
 }
 
+.password-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.password-wrapper span {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
 @media (max-width: 768px) {
   nav {
     display: none;

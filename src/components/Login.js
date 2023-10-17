@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import CustomAlert from "./CustomAlert";
 import Modal from "./Modal";
 import { sendPasswordResetEmail } from "firebase/auth";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 function Login() {
   const emailRef = useRef();
@@ -21,6 +22,8 @@ function Login() {
   const [isModalOpen, setIsModalOpen] = React.useState(false);
   const [resetEmail, setResetEmail] = React.useState("");
   const [resetMessage, setResetMessage] = React.useState("");
+
+  const [passwordVisible, setPasswordVisible] = React.useState(false);
 
   const handleForgotPassword = async (e) => {
     e.preventDefault();
@@ -67,13 +70,22 @@ function Login() {
       )}
       <form className="auth-form" onSubmit={handleSubmit}>
         <input ref={emailRef} type="email" placeholder="Email" required />
-        <input
-          ref={passwordRef}
-          type="password"
-          placeholder="Password"
-          required
-        />
-        <p id="forgot-pass-p" onClick={() => setIsModalOpen(true)} style={{ cursor: "pointer" }}>
+        <div className="password-wrapper">
+          <input
+            ref={passwordRef}
+            type={passwordVisible ? "text" : "password"}
+            placeholder="Password"
+            required
+          />
+          <span onClick={() => setPasswordVisible(!passwordVisible)}>
+            {passwordVisible ? <FaEyeSlash /> : <FaEye />}
+          </span>
+        </div>
+        <p
+          id="forgot-pass-p"
+          onClick={() => setIsModalOpen(true)}
+          style={{ cursor: "pointer" }}
+        >
           Forgot Password?
         </p>
         <button type="submit">Login</button>

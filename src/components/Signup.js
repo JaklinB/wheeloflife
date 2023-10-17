@@ -5,6 +5,7 @@ import "../App.css";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import CustomAlert from "./CustomAlert";
 import { useNavigate } from "react-router-dom";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 function Signup() {
   const emailRef = useRef();
@@ -16,6 +17,7 @@ function Signup() {
   const [showAlert, setShowAlert] = React.useState(false);
 
   const [errorMessage, setErrorMessage] = React.useState("");
+  const [passwordVisible, setPasswordVisible] = React.useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -59,12 +61,17 @@ function Signup() {
       )}
       <form className="auth-form" onSubmit={handleSubmit}>
         <input ref={emailRef} type="email" placeholder="Email" required />
-        <input
-          ref={passwordRef}
-          type="password"
-          placeholder="Password"
-          required
-        />
+        <div className="password-wrapper">
+          <input
+            ref={passwordRef}
+            type={passwordVisible ? "text" : "password"}
+            placeholder="Password"
+            required
+          />
+          <span onClick={() => setPasswordVisible(!passwordVisible)}>
+            {passwordVisible ? <FaEyeSlash /> : <FaEye />}
+          </span>
+        </div>
         <button type="submit" onClick={handleSubmit}>
           Sign Up
         </button>
