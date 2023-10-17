@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { Link } from "react-router-dom";
 import "../App.css";
@@ -8,11 +8,13 @@ import CustomAlert from "./CustomAlert";
 import Modal from "./Modal";
 import { sendPasswordResetEmail } from "firebase/auth";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { collection, query, where, getDocs } from "firebase/firestore";
+import { db } from "../config/firebase";
 
 function Login() {
   const emailRef = useRef();
   const passwordRef = useRef();
-  const { login } = useAuth();
+  const { login, currentUser } = useAuth();
   const auth = getAuth();
   const navigate = useNavigate();
 
@@ -40,12 +42,36 @@ function Login() {
     e.preventDefault();
 
     try {
-      await signInWithEmailAndPassword(
+      const userCredential = await signInWithEmailAndPassword(
         auth,
         emailRef.current.value,
         passwordRef.current.value
       );
-      navigate("/wheeloflife");
+
+      if (userCredential && userCredential.user) {
+        const uid = userCredential.user.uid;
+        const userCollection = collection(db, "users");
+        const q = query(userCollection, where("uid", "==", uid));
+        const querySnapshot = await getDocs(q);
+
+        if (!querySnapshot.empty) {
+          const userData = querySnapshot.docs[0].data();
+
+          if (
+            !userData ||
+            !userData.segments ||
+            userData.segments.length === 0
+          ) {
+            navigate("/segmentInput");
+            return;
+          }
+        } else {
+          navigate("/segmentInput");
+          return;
+        }
+
+        navigate("/wheeloflife");
+      }
     } catch (error) {
       if (
         error.code === "auth/wrong-password" ||
@@ -88,7 +114,9 @@ function Login() {
         >
           Forgot Password?
         </p>
-        <button type="submit">Login</button>
+        <button type="submit" onClick={handleSubmit}>
+          Login
+        </button>
         <p>
           Don't have an account? <Link to="/signup">Sign Up</Link>
         </p>
