@@ -15,8 +15,18 @@ function Signup() {
 
   const [showAlert, setShowAlert] = React.useState(false);
 
+  const [errorMessage, setErrorMessage] = React.useState("");
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+
+    if (!emailPattern.test(emailRef.current.value)) {
+      setErrorMessage("Please enter a valid email address.");
+      setShowAlert(true);
+      return;
+    }
 
     try {
       await createUserWithEmailAndPassword(
@@ -27,9 +37,14 @@ function Signup() {
       navigate("/segmentInput");
     } catch (error) {
       if (error.code === "auth/email-already-in-use") {
+        setErrorMessage(
+          "The email address is already in use by another account."
+        );
         setShowAlert(true);
       } else {
         console.error("Failed to sign up:", error);
+        setErrorMessage("Failed to sign up. Please try again.");
+        setShowAlert(true);
       }
     }
   };
@@ -38,7 +53,7 @@ function Signup() {
     <div className="container">
       {showAlert && (
         <CustomAlert
-          message="The email address is already in use by another account."
+          message={errorMessage}
           onClose={() => setShowAlert(false)}
         />
       )}
@@ -50,7 +65,9 @@ function Signup() {
           placeholder="Password"
           required
         />
-        <button type="submit">Sign Up</button>
+        <button type="submit" onClick={handleSubmit}>
+          Sign Up
+        </button>
         <p>
           Already have an account? <Link to="/">Login</Link>
         </p>
