@@ -36,7 +36,7 @@ function Signup() {
         emailRef.current.value,
         passwordRef.current.value
       );
-      navigate("/segmentInput");
+      navigate("/introScreen");
     } catch (error) {
       if (error.code === "auth/email-already-in-use") {
         setErrorMessage(

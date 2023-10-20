@@ -8,6 +8,7 @@ import AboutPage from './pages/AboutPage';
 import ImprovementsPage from './pages/ImprovementsPage';
 import Navbar from './components/NavBar';
 import SegmentInput from './pages/SegmentInput';
+import IntroScreen from './pages/IntroScreen';
 import './App.css';
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
                     <Route path="/signup" element={<Signup />} />
                     <Route path="/segmentInput" element={<SegmentInput />} />
                     <Route path="/segmentInput/about" element={<AboutPage />} />
+                    <Route path="/introScreen" element={<IntroScreen />} />
                     <Route path="/wheeloflife/*" element={
                         <>
                             <Navbar />

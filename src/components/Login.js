@@ -62,11 +62,11 @@ function Login() {
             !userData.segments ||
             userData.segments.length === 0
           ) {
-            navigate("/segmentInput");
+            navigate("/introScreen");
             return;
           }
         } else {
-          navigate("/segmentInput");
+          navigate("/introScreen");
           return;
         }
 
